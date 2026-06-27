@@ -74,16 +74,16 @@
 
         /* --- TIPOGRAFÍAS Y ELEMENTOS --- */
         
-        /* Título Principal: CORREGIDO a Helvetica, Mayúsculas, Sin Negrita y con Letras Separadas */
+        /* Título Principal: Helvetica, Mayúsculas, Sin Negrita y con Letras Separadas */
         h1 {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
             font-style: normal !important;
             color: #000000 !important;
             font-weight: normal !important;
-            font-size: 3.8rem !important; /* Ajustado un toque el tamaño para equilibrar el espaciado */
+            font-size: 3.8rem !important;
             margin: 0 0 20px 0 !important;
             text-transform: uppercase !important;
-            letter-spacing: 6px !important; /* Separación de letras */
+            letter-spacing: 6px !important;
             cursor: default !important;
             transition: opacity 0.3s ease, transform 0.3s ease !important;
         }
@@ -175,6 +175,7 @@
             text-align: center;
         }
 
+        /* Modificada la foto para que se note el clic del easter egg */
         .bio-foto {
             width: 100%;
             max-width: 300px;
@@ -182,6 +183,13 @@
             border-radius: 4px;
             margin-bottom: 15px;
             filter: grayscale(100%);
+            cursor: pointer; /* Cambia el cursor a manito para invitar al clic */
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .bio-foto:active {
+            transform: scale(0.97); /* Efecto de hundirse un toque al presionarla */
+            filter: grayscale(0%); /* Se pone a color un milisegundo al clickear */
         }
 
         /* Contenedor y links para las plataformas de música */
@@ -239,9 +247,14 @@
 </head>
 <body>
 
-    <!-- Elemento de audio en loop -->
+    <!-- Elemento de audio principal para el tema inédito (en loop) -->
     <audio id="musica-fondo" loop preload="auto">
         <source src="track.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- NUEVO: Elemento de audio exclusivo para el Easter Egg (sin loop y de carga rápida) -->
+    <audio id="audio-easteregg" preload="auto">
+        <source src="secret.mp3" type="audio/mpeg">
     </audio>
 
     <div class="pantalla-limpia">
@@ -268,7 +281,8 @@
         <div id="vista-bio" class="seccion oculto">
             <h2>LILPO</h2>
             
-            <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
+            <!-- Agregado el evento onclick para gatillar el easter egg al tocar la foto -->
+            <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo" onclick="dispararEasterEgg()">
             
             <p class="bio-texto">
                 la emperadora divergente q vos buscabas para combatir lo q tenes dentro...<br>
@@ -288,12 +302,17 @@
 
     <script>
         var audio = document.getElementById('musica-fondo');
+        var audioSecret = document.getElementById('audio-easteregg');
         var btnInedito = document.getElementById('btn-inedito');
         var btnControlUnico = document.getElementById('btn-control-unico');
+        
+        // Variable para recordar si el usuario tenía la música activa antes del easter egg
+        var estabaSonandoFondo = false;
 
-        // Precarga activa
+        // Precarga de ambos audios al iniciar la web
         window.addEventListener('load', function() {
             audio.load();
+            audioSecret.load();
         });
 
         function reproducirInedito() {
@@ -321,6 +340,30 @@
                 btnControlUnico.innerText = "reanudar";
                 btnInedito.innerText = "pausado";
             }
+        }
+
+        // NUEVA FUNCIÓN: Lógica del Easter Egg al tocar la foto
+        function dispararEasterEgg() {
+            // Evaluamos si el tema de fondo estaba corriendo en ese momento
+            if (!audio.paused) {
+                estabaSonandoFondo = true;
+                audio.pause(); // Pausa momentánea para que se escuche nítido el secreto
+            } else {
+                estabaSonandoFondo = false;
+            }
+
+            // Reinicia el audio secreto a cero por si vuelven a clickear la foto seguidamente
+            audioSecret.currentTime = 0;
+            audioSecret.play().catch(function(e) {
+                console.log("Interacción bloqueada por el navegador:", e);
+            });
+
+            // En cuanto el audio del easter egg termina, evalúa si debe retomar la música principal
+            audioSecret.onended = function() {
+                if (estabaSonandoFondo) {
+                    audio.play();
+                }
+            };
         }
 
         function mostrarBio() {
