@@ -243,7 +243,7 @@
 </head>
 <body>
 
-    <!-- Elemento de audio en loop - Asegurate de tener el archivo "track.mp3" en la raíz -->
+    <!-- Elemento de audio en loop configurado para precarga automática -->
     <audio id="musica-fondo" loop preload="auto">
         <source src="track.mp3" type="audio/mpeg">
     </audio>
@@ -268,7 +268,7 @@
         <div id="vista-bio" class="seccion oculto">
             <h2>LILPO</h2>
             
-            <img class="bio-foto" src="foto-perfil2.jpg" alt="Lilpo">
+            <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
             
             <p class="bio-texto">
                 la emperadora divergente q vos buscabas para combatir lo q tenes dentro...<br>
@@ -297,20 +297,26 @@
         var barraControles = document.getElementById('controles-audio');
         var btnInedito = document.getElementById('btn-inedito');
 
+        // Precarga activa apenas abre el sitio
+        window.addEventListener('load', function() {
+            audio.load();
+        });
+
         function reproducirInedito() {
-            // Cambia el texto temporalmente a "cargando..." por si el hosting va lento
             btnInedito.innerText = "cargando...";
             
-            audio.play().then(function() {
+            // Streaming progresivo: intenta reproducir de inmediato
+            audio.play();
+            
+            // En cuanto haya datos suficientes en reproducción, actualiza la interfaz
+            audio.addEventListener('playing', function() {
                 btnInedito.innerText = "reproduciendo";
                 barraControles.style.display = 'block';
-            }).catch(function(error) {
-                btnInedito.innerText = "error al cargar";
-                console.log("Error detallado de reproducción:", error);
-                // Intento alternativo forzado por si falla la promesa
-                audio.muted = false;
-                audio.play();
-                barraControles.style.display = 'block';
+            });
+
+            // Si la conexión va lenta y necesita pausar para procesar datos
+            audio.addEventListener('waiting', function() {
+                btnInedito.innerText = "bufering...";
             });
         }
 
