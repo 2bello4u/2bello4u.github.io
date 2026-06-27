@@ -87,7 +87,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease !important;
         }
 
-        /* Título de la sección Bio: CORREGIDO a Helvetica, Mayúsculas y Sin Negrita */
+        /* Título de la sección Bio: Helvetica, Mayúsculas y Sin Negrita */
         h2 {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
             font-style: normal !important;
@@ -124,7 +124,7 @@
             transform: scale(1.01);
         }
 
-        /* Botón "¿QUIEN ES LILPO?" (Mantiene la tipografía elegida en .pantalla-limpia) */
+        /* Botón "¿QUIEN ES LILPO?" */
         .btn-bio {
             display: inline-block;
             background: none;
@@ -166,7 +166,7 @@
             color: #000000;
             font-weight: normal;
             margin-bottom: 25px;
-            text-align: justify;
+            text-align: center; /* Centrado para mantener la estética limpia */
         }
 
         .bio-foto {
@@ -177,12 +177,40 @@
             margin-bottom: 15px;
             filter: grayscale(100%);
         }
+
+        /* Contenedor e hilos para los enlaces a plataformas de música */
+        .plataformas-container {
+            margin-top: 40px;
+        }
+
+        .plataforma-link {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+            font-size: 1rem;
+            color: #000000 !important;
+            font-weight: normal !important;
+            text-decoration: none !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 15px; /* Distancia entre ambos links de abajo */
+            opacity: 0.7;
+            transition: opacity 0.3s ease, letter-spacing 0.3s ease;
+        }
+
+        .plataforma-link:visited, .plataforma-link:active {
+            color: #000000 !important;
+        }
+
+        .plataforma-link:hover {
+            opacity: 0.4 !important;
+            letter-spacing: 1.5px;
+        }
     </style>
 </head>
 <body>
 
     <div class="pantalla-limpia">
         
+        <!-- VISTA 1: HOME (Tour y Botón) -->
         <div id="vista-home" class="seccion activo">
             <h1>lilpo tour 2026</h1>
             
@@ -194,15 +222,24 @@
             <button class="btn-bio" onclick="mostrarBio()">¿quien es lilpo?</button>
         </div>
 
+        <!-- VISTA 2: BIOGRAFÍA -->
         <div id="vista-bio" class="seccion oculto">
             <h2>LILPO</h2>
             
             <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
             
             <p class="bio-texto">
-                Acá va tu biografía. Podés escribir sobre tu recorrido musical, tus influencias del trap, rock argentino o la cultura urbana, y lo que estás armando para este 2026. Un bloque de texto corto y contundente que defina bien tu identidad artística.
+                la emperadora divergente q vos buscabas para combatir lo q tenes dentro...<br>
+                vive en buenos aires. saco su muy lindo ultimo album "nadie es perfecto" en enero del 2026. musica para sufrir por lo que no se deberia sufrir.
             </p>
             
+            <!-- Links a Spotify y YouTube abajo de la biografía -->
+            <div class="plataformas-container">
+                <a class="plataforma-link" href="#" target="_blank">escuchar en spotify</a>
+                <a class="plataforma-link" href="#" target="_blank">escuchar en youtube</a>
+            </div>
+            
+            <br>
             <button class="btn-volver" onclick="mostrarHome()">← volver</button>
         </div>
 
