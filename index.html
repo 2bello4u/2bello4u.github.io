@@ -140,7 +140,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        /* SEPARACIÓN AGREGADA: Espacio extra exclusivo para separar el botón de Tema Inédito */
+        /* Separación entre botones */
         .espacio-botor {
             margin-top: 50px; 
         }
@@ -210,15 +210,15 @@
             letter-spacing: 1.5px;
         }
 
-        /* --- CONTROLES DEL REPRODUCTOR CORREGIDOS (FIJOS ABAJO) --- */
+        /* --- CONTROLES DEL REPRODUCTOR (FIJOS ABAJO) --- */
         .reproductor-controles {
             position: fixed !important;
             bottom: 40px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             width: 100% !important;
-            z-index: 9999999 !important; /* Prioridad máxima por encima del contenedor limpia */
-            display: none; /* Oculto por defecto mediante JS */
+            z-index: 9999999 !important; 
+            display: none; 
             text-align: center !important;
         }
 
@@ -243,8 +243,8 @@
 </head>
 <body>
 
-    <!-- Elemento de audio en loop -->
-    <audio id="musica-fondo" loop>
+    <!-- Elemento de audio en loop - Asegurate de tener el archivo "track.mp3" en la raíz -->
+    <audio id="musica-fondo" loop preload="auto">
         <source src="track.mp3" type="audio/mpeg">
     </audio>
 
@@ -261,15 +261,14 @@
             <br>
             <button class="btn-principal" onclick="mostrarBio()">¿quien es lilpo?</button>
             <br>
-            <!-- Añadida la clase espacio-botor para distanciarlo del botón de arriba -->
-            <button class="btn-principal espacio-botor" onclick="reproducirInedito()">tema inedito</button>
+            <button id="btn-inedito" class="btn-principal espacio-botor" onclick="reproducirInedito()">tema inedito</button>
         </div>
 
         <!-- VISTA 2: BIOGRAFÍA -->
         <div id="vista-bio" class="seccion oculto">
             <h2>LILPO</h2>
             
-            <img class="bio-foto" src="foto-perfil2.jpg" alt="Lilpo">
+            <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
             
             <p class="bio-texto">
                 la emperadora divergente q vos buscabas para combatir lo q tenes dentro...<br>
@@ -285,7 +284,7 @@
             <button class="btn-volver" onclick="mostrarHome()">← volver</button>
         </div>
 
-        <!-- CONTROLES GLOBALES DE AUDIO CORREGIDOS -->
+        <!-- CONTROLES GLOBALES DE AUDIO -->
         <div id="controles-audio" class="reproductor-controles">
             <button class="btn-control" onclick="pausarAudio()">pausar</button>
             <button class="btn-control" onclick="reanudarAudio()">reanudar</button>
@@ -296,13 +295,22 @@
     <script>
         var audio = document.getElementById('musica-fondo');
         var barraControles = document.getElementById('controles-audio');
+        var btnInedito = document.getElementById('btn-inedito');
 
         function reproducirInedito() {
+            // Cambia el texto temporalmente a "cargando..." por si el hosting va lento
+            btnInedito.innerText = "cargando...";
+            
             audio.play().then(function() {
-                // Forzamos la visualización directa con display block permanente
+                btnInedito.innerText = "reproduciendo";
                 barraControles.style.display = 'block';
             }).catch(function(error) {
-                console.log("Error al reproducir audio:", error);
+                btnInedito.innerText = "error al cargar";
+                console.log("Error detallado de reproducción:", error);
+                // Intento alternativo forzado por si falla la promesa
+                audio.muted = false;
+                audio.play();
+                barraControles.style.display = 'block';
             });
         }
 
@@ -312,7 +320,7 @@
 
         function reanudarAudio() {
             audio.play().catch(function(error) {
-                console.log("Error al reanudar audio:", error);
+                console.log("Error al reanudar:", error);
             });
         }
 
