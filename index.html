@@ -72,26 +72,40 @@
             animation: fadeEfecto 0.6s ease-out forwards;
         }
 
-        /* --- TIPOGRAFÍAS Y ELEMENTOS (SIN NEGRITA) --- */
-        h1, h2 {
+        /* --- TIPOGRAFÍAS Y ELEMENTOS --- */
+        
+        /* Título Principal: Cursivo y Elegante (Sin Negrita) */
+        h1 {
+            font-family: "Georgia", serif !important;
+            font-style: italic !important;
             color: #000000 !important;
             font-weight: normal !important;
-            text-transform: uppercase !important;
-            letter-spacing: 2px !important;
+            font-size: 4.5rem !important; /* Un toque más grande para lucir la cursiva */
+            margin: 0 0 20px 0 !important;
+            text-transform: none !important; /* Mantiene minúsculas/mayúsculas naturales de la cursiva */
+            cursor: default !important;
+            transition: opacity 0.3s ease, transform 0.3s ease !important;
+        }
+
+        /* Título de la sección Bio */
+        h2 {
+            font-family: "Georgia", serif !important;
+            font-style: italic !important;
+            color: #000000 !important;
+            font-weight: normal !important;
+            font-size: 3.5rem !important;
             margin: 0 0 20px 0 !important;
             cursor: default !important;
         }
 
-        h1 { font-size: 4rem !important; }
-        h2 { font-size: 3.5rem !important; } /* Tamaño grande estilo título para el botón/bio */
-
+        /* Enlace de la fecha (Helvética, sin negrita) */
         .tour-link {
             display: inline-block !important;
             font-size: 1.5rem !important;
             color: #000000 !important;
             font-weight: normal !important;
             text-decoration: none !important;
-            margin-bottom: 40px;
+            margin-bottom: 70px; /* SEPARACIÓN EXTENDIDA entre el tour y el botón */
             transition: opacity 0.3s ease;
         }
 
@@ -99,14 +113,14 @@
             color: #000000 !important;
         }
 
-        /* Botón "QUIEN ES LILPO" interactivo */
+        /* Botón "QUIEN ES LILPO" (Helvética, tamaño título, sin negrita) */
         .btn-bio {
             display: inline-block;
             background: none;
             border: none;
             padding: 0;
-            font-family: inherit;
-            font-size: 3.5rem; /* Tamaño similar a un título */
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+            font-size: 3.2rem; 
             font-weight: normal;
             color: #000000;
             text-transform: uppercase;
@@ -115,7 +129,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        /* Botón de volver más sutil abajo de la biografía */
+        /* Botón de volver abajo de la biografía */
         .btn-volver {
             display: inline-block;
             background: none;
@@ -147,11 +161,11 @@
 
         .bio-foto {
             width: 100%;
-            max-width: 300px; /* Controla qué tan grande querés la foto */
+            max-width: 300px;
             height: auto;
-            border-radius: 4px; /* Un pequeño toque redondeado suave */
+            border-radius: 4px;
             margin-bottom: 15px;
-            filter: grayscale(100%); /* Opcional: la deja en blanco y negro para más estética */
+            filter: grayscale(100%);
         }
     </style>
 </head>
@@ -168,15 +182,13 @@
             </a>
             
             <br>
-            <!-- Botón tamaño título -->
             <button class="btn-bio" onclick="mostrarBio()">quien es lilpo</button>
         </div>
 
-        <!-- VISTA 2: BIOGRAFÍA (Oculta al inicio) -->
+        <!-- VISTA 2: BIOGRAFÍA -->
         <div id="vista-bio" class="seccion oculto">
             <h2>lilpo</h2>
             
-            <!-- Reemplaza 'foto-perfil.jpg' por el nombre real de tu imagen (ej. lilpo.jpg) -->
             <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
             
             <p class="bio-texto">
@@ -188,7 +200,6 @@
 
     </div>
 
-    <!-- Script lógico para alternar las secciones sin recargar la página -->
     <script>
         function mostrarBio() {
             document.getElementById('vista-home').classList.remove('activo');
