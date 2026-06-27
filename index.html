@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lilpo Tour 2026</title>
     <style>
-        /* Bloqueamos y ocultamos CUALQUIER elemento que intente inyectar el tema automático de GitHub */
+        /* Ocultamos elementos automáticos del tema de GitHub */
         header, footer, pre, code, hr, #header, #footer, .header, .footer {
             display: none !important;
             opacity: 0 !important;
@@ -15,31 +15,29 @@
             padding: 0 !important;
         }
 
-        /* Animación para el fondo que cubre todo (de blanco puro a rosa) */
+        /* Animación para el fondo (de blanco a rosa) */
         @keyframes fondoFade {
             0% { background-color: #ffffff; }
             100% { background-color: #ffc0cb; }
         }
 
-        /* Animación para que los textos aparezcan suavemente */
-        @keyframes textoFade {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        /* Animación para que las secciones aparezcan con suavidad */
+        @keyframes fadeEfecto {
+            from { opacity: 0; transform: translate(-50%, -48%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
         }
 
-        /* Configuración total de la pantalla limpia */
         html, body {
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
             height: 100vh !important;
-            overflow: hidden !important;
+            overflow-x: hidden !important;
             background-color: #ffffff;
-            /* El fade ahora dura 2.5 segundos (1 segundo más lento) */
             animation: fondoFade 2.5s ease-out forwards !important;
         }
 
-        /* Contenedor central absoluto que tapa cualquier interferencia */
+        /* Contenedor principal que aísla el diseño */
         .pantalla-limpia {
             position: fixed !important;
             top: 0 !important;
@@ -47,74 +45,167 @@
             width: 100% !important;
             height: 100% !important;
             display: block !important;
-            z-index: 999999 !important; /* Se superpone a todo */
+            z-index: 999999 !important;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
             text-align: center !important;
         }
 
-        /* Centrado vertical de los textos */
-        .centrado-vertical {
+        /* Estructura para centrar las secciones en la pantalla */
+        .seccion {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 100%;
-            animation: textoFade 2.8s ease-out forwards;
+            width: 90%;
+            max-width: 600px;
+            transition: opacity 0.5s ease;
         }
 
-        /* Título Principal (Sin negrita) */
-        h1 {
+        /* Clases para ocultar y mostrar con transiciones */
+        .oculto {
+            display: none !important;
+            opacity: 0;
+        }
+
+        .activo {
+            display: block !important;
+            animation: fadeEfecto 0.6s ease-out forwards;
+        }
+
+        /* --- TIPOGRAFÍAS Y ELEMENTOS (SIN NEGRITA) --- */
+        h1, h2 {
             color: #000000 !important;
-            font-size: 4rem !important;
-            font-weight: normal !important; /* QUITADA LA NEGRITA */
-            margin: 0 0 20px 0 !important;
+            font-weight: normal !important;
             text-transform: uppercase !important;
             letter-spacing: 2px !important;
+            margin: 0 0 20px 0 !important;
             cursor: default !important;
-            transition: opacity 0.3s ease, transform 0.3s ease !important;
         }
 
-        /* Hover sutil en el título */
-        h1:hover {
-            opacity: 0.6 !important;
-            transform: scale(1.02);
-        }
+        h1 { font-size: 4rem !important; }
+        h2 { font-size: 3.5rem !important; } /* Tamaño grande estilo título para el botón/bio */
 
-        /* Enlace de la fecha (Sin negrita) */
         .tour-link {
             display: inline-block !important;
             font-size: 1.5rem !important;
             color: #000000 !important;
-            font-weight: normal !important; /* QUITADA LA NEGRITA */
+            font-weight: normal !important;
             text-decoration: none !important;
-            transition: opacity 0.3s ease, letter-spacing 0.3s ease !important;
+            margin-bottom: 40px;
+            transition: opacity 0.3s ease;
         }
 
-        /* Evita que cambie de color al hacer clic o visitarlo */
-        .tour-link:visited, 
-        .tour-link:active,
-        .tour-link:hover {
+        .tour-link:visited, .tour-link:active, .tour-link:hover {
             color: #000000 !important;
         }
 
-        /* Hover interactivo para el link de tickets */
-        .tour-link:hover {
-            opacity: 0.5 !important;
-            letter-spacing: 1.5px !important; /* Separa un poquito las letras al pasar el cursor */
+        /* Botón "QUIEN ES LILPO" interactivo */
+        .btn-bio {
+            display: inline-block;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+            font-size: 3.5rem; /* Tamaño similar a un título */
+            font-weight: normal;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Botón de volver más sutil abajo de la biografía */
+        .btn-volver {
+            display: inline-block;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 1.2rem;
+            color: #000000;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Efectos Hover */
+        h1:hover, .btn-bio:hover { opacity: 0.5 !important; transform: scale(1.02); }
+        .tour-link:hover { opacity: 0.5 !important; }
+        .btn-volver:hover { opacity: 1; }
+
+        /* Estilos de la sección Biografía */
+        .bio-texto {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #000000;
+            font-weight: normal;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .bio-foto {
+            width: 100%;
+            max-width: 300px; /* Controla qué tan grande querés la foto */
+            height: auto;
+            border-radius: 4px; /* Un pequeño toque redondeado suave */
+            margin-bottom: 15px;
+            filter: grayscale(100%); /* Opcional: la deja en blanco y negro para más estética */
         }
     </style>
 </head>
 <body>
 
     <div class="pantalla-limpia">
-        <div class="centrado-vertical">
+        
+        <!-- VISTA 1: HOME (Tour y Botón) -->
+        <div id="vista-home" class="seccion activo">
             <h1>lilpo tour 2026</h1>
             
             <a class="tour-link" href="https://directoriotickets.com/client/event/underfest-4ta-edicion" target="_blank">
                 buenos aires ....... 25 de julio
             </a>
+            
+            <br>
+            <!-- Botón tamaño título -->
+            <button class="btn-bio" onclick="mostrarBio()">quien es lilpo</button>
         </div>
+
+        <!-- VISTA 2: BIOGRAFÍA (Oculta al inicio) -->
+        <div id="vista-bio" class="seccion oculto">
+            <h2>lilpo</h2>
+            
+            <!-- Reemplaza 'foto-perfil.jpg' por el nombre real de tu imagen (ej. lilpo.jpg) -->
+            <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
+            
+            <p class="bio-texto">
+                Acá va tu biografía. Podés escribir sobre tu recorrido musical, tus influencias del trap, rock argentino o la cultura urbana, y lo que estás armando para este 2026. Un bloque de texto corto y contundente que defina bien tu identidad artística.
+            </p>
+            
+            <button class="btn-volver" onclick="mostrarHome()">← volver</button>
+        </div>
+
     </div>
+
+    <!-- Script lógico para alternar las secciones sin recargar la página -->
+    <script>
+        function mostrarBio() {
+            document.getElementById('vista-home').classList.remove('activo');
+            document.getElementById('vista-home').classList.add('oculto');
+            
+            document.getElementById('vista-bio').classList.remove('oculto');
+            document.getElementById('vista-bio').classList.add('activo');
+        }
+
+        function mostrarHome() {
+            document.getElementById('vista-bio').classList.remove('activo');
+            document.getElementById('vista-bio').classList.add('oculto');
+            
+            document.getElementById('vista-home').classList.remove('oculto');
+            document.getElementById('vista-home').classList.add('activo');
+        }
+    </script>
 
 </body>
 </html>
