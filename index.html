@@ -107,7 +107,7 @@
             color: #000000 !important;
             font-weight: normal !important;
             text-decoration: none !important;
-            margin-bottom: 100px; /* Separación vertical amplia */
+            margin-bottom: 60px; /* Reducido un toque para dar espacio al nuevo botón */
             letter-spacing: 0px;
             transition: opacity 0.3s ease, letter-spacing 0.3s ease, transform 0.3s ease !important;
         }
@@ -124,8 +124,8 @@
             transform: scale(1.01);
         }
 
-        /* Botón "¿QUIEN ES LILPO?" */
-        .btn-bio {
+        /* Botones Principales (¿QUIEN ES LILPO? y TEMA INEDITO) */
+        .btn-principal {
             display: inline-block;
             background: none;
             border: none;
@@ -137,6 +137,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
+            margin-bottom: 25px;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
@@ -156,7 +157,7 @@
         }
 
         /* Efectos Hover para títulos y botones */
-        h1:hover, .btn-bio:hover { opacity: 0.5 !important; transform: scale(1.02); }
+        h1:hover, .btn-principal:hover { opacity: 0.5 !important; transform: scale(1.02); }
         .btn-volver:hover { opacity: 1; }
 
         /* Estilos de la sección Biografía */
@@ -191,7 +192,7 @@
             text-decoration: none !important;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin: 0 15px; /* Distancia entre ambos links */
+            margin: 0 15px;
             opacity: 0.7;
             transition: opacity 0.3s ease, letter-spacing 0.3s ease;
         }
@@ -204,13 +205,54 @@
             opacity: 0.4 !important;
             letter-spacing: 1.5px;
         }
+
+        /* --- CONTROLES DEL REPRODUCTOR (ABAJO DE TODO) --- */
+        .reproductor-controles {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            z-index: 1000000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .reproductor-controles.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .btn-control {
+            background: none;
+            border: none;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+            font-size: 0.9rem;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin: 0 15px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-control:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Elemento de audio en loop -->
+    <audio id="musica-fondo" loop>
+        <source src="track.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="pantalla-limpia">
         
-        <!-- VISTA 1: HOME (Tour y Botón) -->
+        <!-- VISTA 1: HOME (Tour, Botón Bio y Botón Tema) -->
         <div id="vista-home" class="seccion activo">
             <h1>lilpo tour 2026</h1>
             
@@ -219,21 +261,22 @@
             </a>
             
             <br>
-            <button class="btn-bio" onclick="mostrarBio()">¿quien es lilpo?</button>
+            <button class="btn-principal" onclick="mostrarBio()">¿quien es lilpo?</button>
+            <br>
+            <button class="btn-principal" onclick="reproducirInedito()">tema inedito</button>
         </div>
 
         <!-- VISTA 2: BIOGRAFÍA -->
         <div id="vista-bio" class="seccion oculto">
             <h2>LILPO</h2>
             
-            <img class="bio-foto" src="foto-perfil2.jpg" alt="Lilpo">
+            <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
             
             <p class="bio-texto">
                 la emperadora divergente q vos buscabas para combatir lo q tenes dentro...<br>
                 vive en buenos aires. saco su muy lindo ultimo album "nadie es perfecto" en enero del 2026. musica para sufrir por lo que no se deberia sufrir.
             </p>
             
-            <!-- Enlaces oficiales a plataformas -->
             <div class="plataformas-container">
                 <a class="plataforma-link" href="https://open.spotify.com/artist/3SEvr2seul9w0NJsUWLQa3" target="_blank">escuchar en spotify</a>
                 <a class="plataforma-link" href="https://www.youtube.com/@tobiaslilpolenta" target="_blank">escuchar en youtube</a>
@@ -243,9 +286,39 @@
             <button class="btn-volver" onclick="mostrarHome()">← volver</button>
         </div>
 
+        <!-- CONTROLES GLOBALES DE AUDIO -->
+        <div id="controles-audio" class="reproductor-controles">
+            <button class="btn-control" onclick="pausarAudio()">pausar</button>
+            <button class="btn-control" onclick="reanudarAudio()">reanudar</button>
+        </div>
+
     </div>
 
     <script>
+        var audio = document.getElementById('musica-fondo');
+        var barraControles = document.getElementById('controles-audio');
+
+        function reproducirInedito() {
+            if (audio.paused) {
+                audio.play().then(function() {
+                    // Muestra los botones de pausa/reanudar abajo de todo
+                    barraControles.classList.add('visible');
+                }).catch(function(error) {
+                    console.log("Error al reproducir audio:", error);
+                });
+            }
+        }
+
+        function pausarAudio() {
+            audio.pause();
+        }
+
+        function reanudarAudio() {
+            audio.play().catch(function(error) {
+                console.log("Error al reanudar audio:", error);
+            });
+        }
+
         function mostrarBio() {
             document.getElementById('vista-home').classList.remove('activo');
             document.getElementById('vista-home').classList.add('oculto');
