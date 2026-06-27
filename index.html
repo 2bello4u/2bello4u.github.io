@@ -74,15 +74,16 @@
 
         /* --- TIPOGRAFÍAS Y ELEMENTOS --- */
         
-        /* Título Principal: Cursivo y Elegante (Georgia) */
+        /* Título Principal: CORREGIDO a Helvetica, Mayúsculas, Sin Negrita y con Letras Separadas */
         h1 {
-            font-family: "Georgia", serif !important;
-            font-style: italic !important;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+            font-style: normal !important;
             color: #000000 !important;
             font-weight: normal !important;
-            font-size: 4.5rem !important;
+            font-size: 3.8rem !important; /* Ajustado un toque el tamaño para equilibrar el espaciado */
             margin: 0 0 20px 0 !important;
-            text-transform: none !important;
+            text-transform: uppercase !important;
+            letter-spacing: 6px !important; /* Separación de letras */
             cursor: default !important;
             transition: opacity 0.3s ease, transform 0.3s ease !important;
         }
@@ -210,9 +211,9 @@
             letter-spacing: 1.5px;
         }
 
-        /* --- NUEVO ESTILO: BOTÓN ÚNICO DE CONTROL PEGADO ABAJO DEL TEMA --- */
+        /* --- BOTÓN ÚNICO DE CONTROL PEGADO ABAJO DEL TEMA --- */
         .control-audio-container {
-            margin-top: 10px; /* Pegadito al botón superior */
+            margin-top: 10px;
             height: 20px;
         }
 
@@ -226,7 +227,7 @@
             letter-spacing: 2px !important;
             cursor: pointer !important;
             opacity: 0.5;
-            display: none; /* Se muestra solo al activar el tema */
+            display: none; 
             margin: 0 auto !important;
             transition: opacity 0.3s ease !important;
         }
@@ -258,7 +259,6 @@
             <br>
             <button id="btn-inedito" class="btn-principal espacio-botor" onclick="reproducirInedito()">tema inedito</button>
             
-            <!-- Botón único interactivo pegado abajo del texto -->
             <div class="control-audio-container">
                 <button id="btn-control-unico" class="btn-toggle-audio" onclick="toggleAudio()">pausar</button>
             </div>
@@ -303,7 +303,7 @@
             audio.addEventListener('playing', function() {
                 btnInedito.innerText = "reproduciendo";
                 btnControlUnico.innerText = "pausar";
-                btnControlUnico.style.display = 'block'; // Aparece pegadito abajo
+                btnControlUnico.style.display = 'block';
             });
 
             audio.addEventListener('waiting', function() {
@@ -311,7 +311,6 @@
             });
         }
 
-        // Función lógica para alternar entre Pausar y Reanudar en el mismo botón
         function toggleAudio() {
             if (audio.paused) {
                 audio.play();
