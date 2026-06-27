@@ -210,19 +210,13 @@
             letter-spacing: 1.5px;
         }
 
-        /* --- CONTROLES DEL REPRODUCTOR (FIJOS ABAJO) --- */
-        .reproductor-controles {
-            position: fixed !important;
-            bottom: 40px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            width: 100% !important;
-            z-index: 9999999 !important; 
-            display: none; 
-            text-align: center !important;
+        /* --- NUEVO ESTILO: BOTÓN ÚNICO DE CONTROL PEGADO ABAJO DEL TEMA --- */
+        .control-audio-container {
+            margin-top: 10px; /* Pegadito al botón superior */
+            height: 20px;
         }
 
-        .btn-control {
+        .btn-toggle-audio {
             background: none !important;
             border: none !important;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -231,19 +225,20 @@
             text-transform: uppercase !important;
             letter-spacing: 2px !important;
             cursor: pointer !important;
-            margin: 0 20px !important;
             opacity: 0.5;
+            display: none; /* Se muestra solo al activar el tema */
+            margin: 0 auto !important;
             transition: opacity 0.3s ease !important;
         }
 
-        .btn-control:hover {
+        .btn-toggle-audio:hover {
             opacity: 1 !important;
         }
     </style>
 </head>
 <body>
 
-    <!-- Elemento de audio en loop configurado para precarga automática -->
+    <!-- Elemento de audio en loop -->
     <audio id="musica-fondo" loop preload="auto">
         <source src="track.mp3" type="audio/mpeg">
     </audio>
@@ -262,6 +257,11 @@
             <button class="btn-principal" onclick="mostrarBio()">¿quien es lilpo?</button>
             <br>
             <button id="btn-inedito" class="btn-principal espacio-botor" onclick="reproducirInedito()">tema inedito</button>
+            
+            <!-- Botón único interactivo pegado abajo del texto -->
+            <div class="control-audio-container">
+                <button id="btn-control-unico" class="btn-toggle-audio" onclick="toggleAudio()">pausar</button>
+            </div>
         </div>
 
         <!-- VISTA 2: BIOGRAFÍA -->
@@ -284,50 +284,44 @@
             <button class="btn-volver" onclick="mostrarHome()">← volver</button>
         </div>
 
-        <!-- CONTROLES GLOBALES DE AUDIO -->
-        <div id="controles-audio" class="reproductor-controles">
-            <button class="btn-control" onclick="pausarAudio()">pausar</button>
-            <button class="btn-control" onclick="reanudarAudio()">reanudar</button>
-        </div>
-
     </div>
 
     <script>
         var audio = document.getElementById('musica-fondo');
-        var barraControles = document.getElementById('controles-audio');
         var btnInedito = document.getElementById('btn-inedito');
+        var btnControlUnico = document.getElementById('btn-control-unico');
 
-        // Precarga activa apenas abre el sitio
+        // Precarga activa
         window.addEventListener('load', function() {
             audio.load();
         });
 
         function reproducirInedito() {
             btnInedito.innerText = "cargando...";
-            
-            // Streaming progresivo: intenta reproducir de inmediato
             audio.play();
             
-            // En cuanto haya datos suficientes en reproducción, actualiza la interfaz
             audio.addEventListener('playing', function() {
                 btnInedito.innerText = "reproduciendo";
-                barraControles.style.display = 'block';
+                btnControlUnico.innerText = "pausar";
+                btnControlUnico.style.display = 'block'; // Aparece pegadito abajo
             });
 
-            // Si la conexión va lenta y necesita pausar para procesar datos
             audio.addEventListener('waiting', function() {
                 btnInedito.innerText = "bufering...";
             });
         }
 
-        function pausarAudio() {
-            audio.pause();
-        }
-
-        function reanudarAudio() {
-            audio.play().catch(function(error) {
-                console.log("Error al reanudar:", error);
-            });
+        // Función lógica para alternar entre Pausar y Reanudar en el mismo botón
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                btnControlUnico.innerText = "pausar";
+                btnInedito.innerText = "reproduciendo";
+            } else {
+                audio.pause();
+                btnControlUnico.innerText = "reanudar";
+                btnInedito.innerText = "pausado";
+            }
         }
 
         function mostrarBio() {
