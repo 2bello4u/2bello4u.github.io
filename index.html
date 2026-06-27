@@ -92,4 +92,137 @@
             font-family: "Georgia", serif !important;
             font-style: italic !important;
             color: #000000 !important;
-            font
+            font-weight: normal !important;
+            font-size: 3.5rem !important;
+            margin: 0 0 20px 0 !important;
+            cursor: default !important;
+        }
+
+        /* Enlace de la fecha (Helvética, sin negrita) */
+        .tour-link {
+            display: inline-block !important;
+            font-size: 1.5rem !important;
+            color: #000000 !important;
+            font-weight: normal !important;
+            text-decoration: none !important;
+            margin-bottom: 100px; /* MÁS SEPARACIÓN VERTICAL */
+            letter-spacing: 0px;
+            transition: opacity 0.3s ease, letter-spacing 0.3s ease, transform 0.3s ease !important;
+        }
+
+        .tour-link:visited, .tour-link:active {
+            color: #000000 !important;
+        }
+
+        /* RECUPERADO: Efecto hover que separa las letras en el tour */
+        .tour-link:hover {
+            color: #000000 !important;
+            opacity: 0.5 !important;
+            letter-spacing: 1.5px !important;
+            transform: scale(1.01);
+        }
+
+        /* Botón "¿QUIEN ES LILPO?" (Helvética, tamaño título, sin negrita) */
+        .btn-bio {
+            display: inline-block;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+            font-size: 3.2rem; 
+            font-weight: normal;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Botón de volver abajo de la biografía */
+        .btn-volver {
+            display: inline-block;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 1.2rem;
+            color: #000000;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 20px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Efectos Hover para títulos y botones */
+        h1:hover, .btn-bio:hover { opacity: 0.5 !important; transform: scale(1.02); }
+        .btn-volver:hover { opacity: 1; }
+
+        /* Estilos de la sección Biografía */
+        .bio-texto {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #000000;
+            font-weight: normal;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .bio-foto {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            filter: grayscale(100%);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pantalla-limpia">
+        
+        <div id="vista-home" class="seccion activo">
+            <h1>lilpo tour 2026</h1>
+            
+            <a class="tour-link" href="https://directoriotickets.com/client/event/underfest-4ta-edicion" target="_blank">
+                buenos aires ....... 25 de julio
+            </a>
+            
+            <br>
+            <button class="btn-bio" onclick="mostrarBio()">¿quien es lilpo?</button>
+        </div>
+
+        <div id="vista-bio" class="seccion oculto">
+            <h2>lilpo</h2>
+            
+            <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
+            
+            <p class="bio-texto">
+                Acá va tu biografía. Podés escribir sobre tu recorrido musical, tus influencias del trap, rock argentino o la cultura urbana, y lo que estás armando para este 2026. Un bloque de texto corto y contundente que defina bien tu identidad artística.
+            </p>
+            
+            <button class="btn-volver" onclick="mostrarHome()">← volver</button>
+        </div>
+
+    </div>
+
+    <script>
+        function mostrarBio() {
+            document.getElementById('vista-home').classList.remove('activo');
+            document.getElementById('vista-home').classList.add('oculto');
+            
+            document.getElementById('vista-bio').classList.remove('oculto');
+            document.getElementById('vista-bio').classList.add('activo');
+        }
+
+        function mostrarHome() {
+            document.getElementById('vista-bio').classList.remove('activo');
+            document.getElementById('vista-bio').classList.add('oculto');
+            
+            document.getElementById('vista-home').classList.remove('oculto');
+            document.getElementById('vista-home').classList.add('activo');
+        }
+    </script>
+
+</body>
+</html>
