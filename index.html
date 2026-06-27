@@ -74,7 +74,7 @@
 
         /* --- TIPOGRAFÍAS Y ELEMENTOS --- */
         
-        /* Título Principal: Cursivo y Elegante (Sin Negrita) */
+        /* Título Principal: Cursivo y Elegante (Georgia) */
         h1 {
             font-family: "Georgia", serif !important;
             font-style: italic !important;
@@ -87,14 +87,16 @@
             transition: opacity 0.3s ease, transform 0.3s ease !important;
         }
 
-        /* Título de la sección Bio */
+        /* Título de la sección Bio: CORREGIDO a Helvetica, Mayúsculas y Sin Negrita */
         h2 {
-            font-family: "Georgia", serif !important;
-            font-style: italic !important;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+            font-style: normal !important;
             color: #000000 !important;
             font-weight: normal !important;
             font-size: 3.5rem !important;
             margin: 0 0 20px 0 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
             cursor: default !important;
         }
 
@@ -105,7 +107,7 @@
             color: #000000 !important;
             font-weight: normal !important;
             text-decoration: none !important;
-            margin-bottom: 100px; /* MÁS SEPARACIÓN VERTICAL */
+            margin-bottom: 100px; /* Separación vertical amplia */
             letter-spacing: 0px;
             transition: opacity 0.3s ease, letter-spacing 0.3s ease, transform 0.3s ease !important;
         }
@@ -114,7 +116,7 @@
             color: #000000 !important;
         }
 
-        /* RECUPERADO: Efecto hover que separa las letras en el tour */
+        /* Efecto hover que separa las letras en el tour */
         .tour-link:hover {
             color: #000000 !important;
             opacity: 0.5 !important;
@@ -122,13 +124,13 @@
             transform: scale(1.01);
         }
 
-        /* Botón "¿QUIEN ES LILPO?" (Helvética, tamaño título, sin negrita) */
+        /* Botón "¿QUIEN ES LILPO?" (Mantiene la tipografía elegida en .pantalla-limpia) */
         .btn-bio {
             display: inline-block;
             background: none;
             border: none;
             padding: 0;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+            font-family: inherit !important;
             font-size: 3.2rem; 
             font-weight: normal;
             color: #000000;
@@ -193,7 +195,7 @@
         </div>
 
         <div id="vista-bio" class="seccion oculto">
-            <h2>lilpo</h2>
+            <h2>LILPO</h2>
             
             <img class="bio-foto" src="foto-perfil.jpg" alt="Lilpo">
             
